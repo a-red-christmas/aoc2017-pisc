@@ -23,4 +23,33 @@
     $sum
 ;
 
-parse-input checksum println
+: day-2.1 ( -- ) parse-input checksum println ;
+
+
+: neq ( a b -- ? ) = not ;
+: div-sum ( input -- sum ) 
+    0 :sum
+    [ :row
+        $row [ :i 
+            $row [ :j
+                $j $i divisor? $i $j neq and [ 
+                   $j $i / $sum + :sum ] when
+            ] vec-each 
+        ] vec-each 
+    ] vec-each
+    $sum
+;
+
+/*
+: parse-input ( -- input ) 
+{ 
+    { 5 9 2 8 }
+    { 9 4 7 3 }
+    { 3 8 6 5 }
+}
+;
+*/
+
+: day-2.2 ( -- ) parse-input div-sum println ;
+
+day-2.2
