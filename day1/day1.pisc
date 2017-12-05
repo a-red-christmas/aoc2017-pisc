@@ -1,0 +1,16 @@
+: get-input ( -- input ) { "input.txt" get-str-at-path str-trim [ str>int ] each-char } ;
+
+: day-1.1 ( -- sum ) 
+    get-input dup len :num-digits :digits
+    0 :idx
+    0 :sum
+    [ $digits $idx 1 + $num-digits mod vec-at ] :peek
+    [ $digits $idx vec-at ] :current
+    $num-digits [ 
+        peek current eq [$sum current + :sum] when
+        ++idx
+    ] times
+    $sum
+;
+
+day-1.1 println
