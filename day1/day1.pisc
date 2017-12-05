@@ -13,4 +13,19 @@
     $sum
 ;
 
-day-1.1 println
+: day-1.2 ( -- sum ) 
+    get-input dup len :num-digits :digits
+    0 :idx
+    0 :sum
+    [ $digits $idx $num-digits 2 / + $num-digits mod vec-at ] :peek
+    [ $digits $idx vec-at ] :current
+    $num-digits [ 
+        peek current eq [$sum current + :sum] when
+        ++idx
+    ] times
+    $sum
+
+;
+
+${"Part 1:" day-1.1} println
+${"Part 2:" day-1.2} println
