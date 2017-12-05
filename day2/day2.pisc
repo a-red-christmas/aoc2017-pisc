@@ -1,0 +1,26 @@
+: parse-input ( -- input ) 
+    {
+        "input.txt" get-str-at-path str-trim "\n" str-split [ :line 
+            {$line "\t" str-split [str-trim str>int] vec-each}
+        ] vec-each
+    }
+; 
+
+
+: extent ( row comparison -- extent ) 
+    :compare :row
+    $row 0 vec-at :extent
+    $row [dup $extent compare [:extent][drop] if] vec-each
+    $extent
+;
+
+: largest ( row -- largest ) [>] extent ;
+: smallest ( row -- smallest ) [<] extent ;
+
+: checksum ( input -- checksum ) 
+    0 :sum
+    [ dup largest swap smallest  - $sum + :sum ] vec-each
+    $sum
+;
+
+parse-input checksum println
